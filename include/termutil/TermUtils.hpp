@@ -92,6 +92,17 @@ inline bool isTerminal(std::ostream* stream) {
  *
  */
 inline bool supportsAnsi(std::ostream* stream) {
+
+    /**
+     * For script compat reasons (specifically for Nova), there's a variable that overrules ALL the other rules.
+     * If this is set, we're rolling with it.
+     *
+     * This will break piping, though, but shouldn't have any legitimate reasons to be used in the wild.
+     */ 
+    if (EnvVariable::getEnv("forceAnsi", "") == "yes") {
+        return true;
+    }
+
     // Main check; if we're not in a terminal, there's a 100% chance we don't support ANSI
     // This is also in part because adding ANSI to a file, if piped properly, is really not a good idea
     // Also means any hooks or other programs trying to read Taskranger's output doesn't get useless bytes
