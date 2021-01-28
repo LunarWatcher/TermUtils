@@ -4,6 +4,7 @@
 #include <string>
 // required for getenv
 #include <cstdlib>
+#include <iostream>
 
 // Windows is the easiest one to detect.
 // Basically, this first clause applies for everything that isn't Windows,
@@ -118,15 +119,14 @@ inline std::string expandUserPath(const std::string& inputPath) {
             homePath = userProfile;
 
     } else {
-        ColorPrinter printer;
-        printer << ANSIFeature::FOREGROUND << 9 << "This doesn't work." << ANSIFeature::CLEAR
-                << " Due to Windows having a very limited API for expanding user paths, and it relies on environment "
-                << "variables and assumptions, me (the developer), has decided to not implement ~user expansion on "
-                   "Windows. "
-                << "I cannot easily test it, nor can I find any reassuring information for a universal pattern I can "
-                   "use. "
-                << "Replace your path with an absolute path instead. An implementation for this feature may be "
-                   "available in the future.\n";
+        std::cerr << "This doesn't work."
+                  << " Due to Windows having a very limited API for expanding user paths, and it relies on environment "
+                  << "variables and assumptions, me (the developer), has decided to not implement ~user expansion on "
+                     "Windows. "
+                  << "I cannot easily test it, nor can I find any reassuring information for a universal pattern I can "
+                     "use. "
+                  << "Replace your path with an absolute path instead. An implementation for this feature may be "
+                     "available in the future.\n";
         return "";
     }
     // Force forward slashes
@@ -164,9 +164,8 @@ inline std::string expandUserPath(const std::string& inputPath) {
     }
 
     if (passwdPtr == nullptr && homePath == "") {
-        ColorPrinter printer;
-        printer << ANSIFeature::FOREGROUND << 9 << "Failed to expand the user path for " << rawPath
-                << ANSIFeature::CLEAR << ". The system seems to think you don't exist. "
+        std::cerr << "Failed to expand the user path for " << rawPath
+                << ". The system seems to think you don't exist. "
                 << "Please specify the path to use - don't abbreviate it with ~.\n";
         return "";
     } else if (homePath == "")
