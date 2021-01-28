@@ -50,3 +50,5 @@ inline std::string getEnv(const char* name, const std::string& fail = "") {
 #endif
 
 } // namespace EnvVariable
+
+}
