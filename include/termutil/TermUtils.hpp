@@ -35,7 +35,7 @@
 
 namespace termutil {
 
-namespace TermHelper {
+namespace TermUtils {
 
 inline void enableTermColors();
 /**
