@@ -62,7 +62,17 @@ inline std::string expandUserPath(const std::string& inputPath) {
     // and grab the rest of the path. This is necessary to reconstruct
     // the path afterwards.
     std::string mod = rawPath.substr(1);
-    std::vector<std::string> pathSplit = StrUtil::splitString(mod, "/", 1);
+    std::vector<std::string> pathSplit; // = StrUtil::splitString(mod, "/", 1);
+
+    // splitString but smaller so I don't have to import everything
+    size_t pos = 0;
+    std::string token, cache;
+    pos = mod.find("/");
+    token = mod.substr(0, pos);
+    cache = mod;
+    cache.erase(0, pos + 1);
+    pathSplit.push_back(token);
+    pathSplit.push_back(cache);
 
     //  Parse off the username
     if (rawPath.length() >= 2 && !isSeparator(rawPath.at(1))) {

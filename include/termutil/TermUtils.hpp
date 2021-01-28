@@ -33,7 +33,7 @@
 #include "EnvVariableHelper.hpp"
 #include <memory>
 
-namespace termutils {
+namespace termutil {
 
 namespace TermHelper {
 
