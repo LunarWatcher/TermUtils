@@ -8,7 +8,7 @@ namespace termutil {
  * that may or may not be secure, dependong on the platform.
  * On Windows, the function uses _dupenv_s under the hood.
  * On Linux and other operating systems, it depends on availability.
- * At this time, only Linux distros with _GNU_SOURCE and secure_getenv are supported with a secure 
+ * At this time, only Linux distros with _GNU_SOURCE and secure_getenv are supported with a secure
  * getenv function - the rest fall back to getenv.
  */
 namespace EnvVariable {

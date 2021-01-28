@@ -1,6 +1,5 @@
 #pragma once
 
-namespace termutil {
 #if __has_include(<optional>)
 #include <optional>
 template <typename T>
@@ -17,4 +16,4 @@ namespace fs = std::filesystem;
 #include "experimental/filesystem"
 namespace fs = std::experimental::filesystem;
 #endif
-}
+

@@ -193,4 +193,6 @@ inline void enableTermColors() {
 
 #endif
 
-} // namespace TermUtils
+} // namespace TermHelper
+
+} // namespace termutils

@@ -165,6 +165,6 @@ inline std::string expandUserPath(const std::string& inputPath) {
     return joinPath(homePath, remainingPath);
 }
 
-}
+} // namespace Filesystem
 
-}
+} // namespace termutil

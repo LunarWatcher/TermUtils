@@ -1,13 +1,13 @@
 #pragma once
 
+#include "TermUtils.hpp"
 #include <any>
+#include <codecvt>
 #include <iostream>
+#include <locale>
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include "TermUtils.hpp"
-#include <codecvt>
-#include <locale>
 
 namespace termutil {
 
