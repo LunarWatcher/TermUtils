@@ -110,10 +110,8 @@ inline std::string expandUserPath(const std::string& inputPath) {
             auto envHomePath = EnvVariable::getEnv("HOMEPATH");
 
             if (envHomePath == "") {
-                ColorPrinter printer;
-                printer << ANSIFeature::FOREGROUND << 9
-                        << "Unable to find %HOMEPATH%. Specify the path explicitly instead." << ANSIFeature::CLEAR
-                        << "\n";
+                std::cerr << "Unable to find %HOMEPATH%. Specify the path explicitly instead."
+                          << "\n";
                 return "";
             }
             homePath = homeDrive + envHomePath;
@@ -166,9 +164,8 @@ inline std::string expandUserPath(const std::string& inputPath) {
     }
 
     if (passwdPtr == nullptr && homePath == "") {
-        std::cerr << "Failed to expand the user path for " << rawPath
-                << ". The system seems to think you don't exist. "
-                << "Please specify the path to use - don't abbreviate it with ~.\n";
+        std::cerr << "Failed to expand the user path for " << rawPath << ". The system seems to think you don't exist. "
+                  << "Please specify the path to use - don't abbreviate it with ~.\n";
         return "";
     } else if (homePath == "")
         homePath = passwdPtr->pw_dir;
