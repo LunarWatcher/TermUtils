@@ -14,6 +14,8 @@
 // Used for getuid
 #include <sys/types.h>
 #include <unistd.h>
+#else
+#include "EnvVariableHelper.hpp"
 #endif
 
 #include "CompatUtil.hpp"
