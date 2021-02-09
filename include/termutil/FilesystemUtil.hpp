@@ -173,6 +173,26 @@ inline std::string expandUserPath(const std::string& inputPath) {
     return joinPath(homePath, remainingPath);
 }
 
+inline std::string getExecutableLocation() {
+#ifdef _WIN32
+    // TODO make this slightly less trash, to the extent this trash OS lets this be less trash
+    WCHAR path[MAX_PATH];
+    GetModuleFileNameW(nullptr, path, MAX_PATH);
+    std::wstring str(path);
+    return std::string(str.begin(), str.end());
+#elif __APPLE__
+    char path[2048];
+    uint32_t size = sizeof(path);
+    if (_NSGetExecutablePath(path, &size) == 0) {
+
+    } else {
+        throw std::string("Critical error: getExecutableLocation() failed (buffer too small; need " + std::to_string(size) + ")");
+    }
+#else
+    return fs::read_symlink(fs::path("/proc/self/exe")).string();
+#endif
+}
+
 } // namespace Filesystem
 
 } // namespace termutil
