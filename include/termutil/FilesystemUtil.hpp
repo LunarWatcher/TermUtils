@@ -18,6 +18,10 @@
 #include "EnvVariableHelper.hpp"
 #endif
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
 #include "CompatUtil.hpp"
 
 namespace termutil {
@@ -184,7 +188,7 @@ inline std::string getExecutableLocation() {
     char path[2048];
     uint32_t size = sizeof(path);
     if (_NSGetExecutablePath(path, &size) == 0) {
-
+        return std::string(path);
     } else {
         throw std::string("Critical error: getExecutableLocation() failed (buffer too small; need " + std::to_string(size) + ")");
     }
