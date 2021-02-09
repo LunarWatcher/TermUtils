@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #else
+#include <windows.h>
 #include "EnvVariableHelper.hpp"
 #endif
 
