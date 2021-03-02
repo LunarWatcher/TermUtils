@@ -15,8 +15,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 #else
-#include <windows.h>
 #include "EnvVariableHelper.hpp"
+#include <windows.h>
 #endif
 
 #ifdef __APPLE__
@@ -181,17 +181,22 @@ inline std::string expandUserPath(const std::string& inputPath) {
 inline std::string getExecutableLocation() {
 #ifdef _WIN32
     // TODO make this slightly less trash, to the extent this trash OS lets this be less trash
-    WCHAR path[MAX_PATH];
-    GetModuleFileNameW(nullptr, path, MAX_PATH);
-    std::wstring str(path);
-    return std::string(str.begin(), str.end());
+    char path[MAX_PATH];
+    if (GetModuleFileNameA(nullptr, path, MAX_PATH)) {
+        return std::string{path};
+
+    } else {
+        // TODO: figure out better error handling here.
+        throw std::string{"Critical error: GetModuleFileNameA() returned false"};
+    }
 #elif __APPLE__
     char path[2048];
     uint32_t size = sizeof(path);
     if (_NSGetExecutablePath(path, &size) == 0) {
         return std::string(path);
     } else {
-        throw std::string("Critical error: getExecutableLocation() failed (buffer too small; need " + std::to_string(size) + ")");
+        throw std::string{
+                "Critical error: getExecutableLocation() failed (buffer too small; need " + std::to_string(size) + ")"};
     }
 #else
     return fs::read_symlink(fs::path("/proc/self/exe")).string();
